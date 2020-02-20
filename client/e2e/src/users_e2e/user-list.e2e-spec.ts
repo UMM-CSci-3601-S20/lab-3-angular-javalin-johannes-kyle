@@ -35,7 +35,7 @@ describe('User list', () => {
     page.typeInput('user-company-input', 'ti');
 
     // Go through each of the cards that are being shown and get the companies
-    let companies = page.getUserCards().map(e => e.element(by.className('user-card-company')).getText());
+    const companies = page.getUserCards().map(e => e.element(by.className('user-card-company')).getText());
 
     // We should see these companies
     expect(companies).toContain('MOMENTIA');
@@ -50,7 +50,7 @@ describe('User list', () => {
     page.typeInput('user-age-input', '27');
 
     // Go through each of the cards that are being shown and get the names
-    let names = page.getUserCards().map(e => e.element(by.className('user-card-name')).getText());
+    const names = page.getUserCards().map(e => e.element(by.className('user-card-name')).getText());
 
     // We should see these users whose age is 27
     expect(names).toContain('Stokes Clayton');
