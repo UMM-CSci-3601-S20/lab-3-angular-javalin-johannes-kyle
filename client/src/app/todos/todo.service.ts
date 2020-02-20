@@ -11,17 +11,31 @@ export class TodoService {
   constructor(private httpClient: HttpClient) {
   }
 
-  getTodos(filters?: { age?: number, company?: string }): Observable<Todo[]> {
+  getTodos(filters?: { status?: boolean, contains?: string, owner?: string, category?: string,
+    orderBy?: string, limit?: string }): Observable<Todo[]> {
     let httpParams: HttpParams = new HttpParams();
     if (filters) {
-      if (filters.role) {
-        httpParams = httpParams.set('role', filters.role);
+      if (filters.status) {
+        if (filters.status === true) {
+          httpParams = httpParams.set('status', 'complete');
+        } else {
+          httpParams = httpParams.set('status', 'incomplete');
+        }
       }
-      if (filters.age) {
-        httpParams = httpParams.set('age', filters.age.toString());
+      if (filters.contains) {
+        httpParams = httpParams.set('contains', filters.contains);
       }
-      if (filters.company) {
-        httpParams = httpParams.set('company', filters.company);
+      if (filters.owner) {
+        httpParams = httpParams.set('owner', filters.owner);
+      }
+      if (filters.category) {
+        httpParams = httpParams.set('category', filters.category);
+      }
+      if (filters.orderBy) {
+        httpParams = httpParams.set('orderBy', filters.orderBy);
+      }
+      if (filters.limit) {
+        httpParams = httpParams.set('limit', filters.limit);
       }
     }
     return this.httpClient.get<Todo[]>(this.todoUrl, {
@@ -33,26 +47,69 @@ export class TodoService {
     return this.httpClient.get<Todo>(this.todoUrl + '/' + id);
   }
 
-  filterTodos(todos: Todo[], filters: { name?: string, company?: string }): Todo[] {
+  filterTodos(todos: Todo[], filters: { status?: boolean, contains?: string, owner?: string, category?: string,
+    orderBy?: string, limit?: string  }): Todo[] {
 
     let filteredTodos = todos;
 
-    // Filter by name
-    if (filters.name) {
-      filters.name = filters.name.toLowerCase();
+    // Filter by status
+    if (filters.status) {
+      if (filters.status === true) {
+        filteredTodos = filteredTodos.filter(todo => {
+
+        })
+      }
+
+      filters.status = filters.status.toLowerCase();
 
       filteredTodos = filteredTodos.filter(todo => {
-        return todo.name.toLowerCase().indexOf(filters.name) !== -1;
+        return todo.status.toLowerCase().indexOf(filters.status) !== -1;
       });
     }
 
-    // Filter by company
-    if (filters.company) {
-      filters.company = filters.company.toLowerCase();
+    // Filter by contains
+    if (filters.contains) {
+      filters.contains = filters.contains.toLowerCase();
 
       filteredTodos = filteredTodos.filter(todo => {
-        return todo.company.toLowerCase().indexOf(filters.company) !== -1;
+        return todo.body.toLowerCase().indexOf(filters.contains) !== -1;
       });
+    }
+
+    // Filter by owner
+    if (filters.owner) {
+      filters.owner = filters.owner.toLowerCase();
+
+      filteredTodos = filteredTodos.filter(todo => {
+        return todo.owner.toLowerCase().indexOf(filters.owner) !== -1;
+      });
+    }
+
+    // Filter by category
+    if (filters.category) {
+      filters.category = filters.category.toLowerCase();
+
+      filteredTodos = filteredTodos.filter(todo => {
+        return todo.category.toLowerCase().indexOf(filters.category) !== -1;
+      });
+    }
+
+    // Filter by orderBy
+    if (filters.orderBy) {
+      filters.orderBy = filters.orderBy.toLowerCase();
+
+      filteredTodos = filteredTodos.filter(todo => {
+        return todo.company.toLowerCase().indexOf(filters.orderBy) !== -1;
+      });
+    }
+
+    // Filter by limit
+    if (filters.limit) {
+      filters.limit = filters.limit.toLowerCase();
+
+      filteredTodos = filteredTodos.filter(todo => {
+        return
+      })
     }
 
     return filteredTodos;
