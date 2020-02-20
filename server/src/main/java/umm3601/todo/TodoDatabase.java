@@ -26,6 +26,7 @@ public class TodoDatabase {
     Gson gson = new Gson();
     InputStreamReader reader = new InputStreamReader(getClass().getResourceAsStream(todoDataFile));
     allTodos = gson.fromJson(reader, Todo[].class);
+    reader.close();
   }
 
   public int size() {
@@ -126,7 +127,7 @@ public class TodoDatabase {
    * Get an array of all the todos having the target body.
    *
    * @param todos       the list of todos to filter by body
-   * @param targetBody  the target body to look for
+   * @param targetOwner  the target body to look for
    * @return an array of all the todos from the given list that have the target
    *         body
    */
