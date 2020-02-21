@@ -28,10 +28,6 @@ module.exports = function (config) {
     autoWatch: true,
     browsers: ['Firefox', 'Chrome'],
     customLaunchers: {
-      FirefoxHeadlessCI: {
-        base: 'FirefoxHeadless',
-        flags: ['--no-sandbox']
-      },
       ChromeHeadlessCI: {
         base: 'ChromeHeadless',
         flags: ['--no-sandbox']
