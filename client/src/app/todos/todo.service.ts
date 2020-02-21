@@ -98,21 +98,78 @@ export class TodoService {
     // Filter by orderBy
     if (filters.orderBy) {
       filters.orderBy = filters.orderBy.toLowerCase();
+      switch(filters.orderBy) {
+        case 'owner': {
+          filteredTodos.sort((o1, o2) => {
+            if (o1.owner.localeCompare(o2.owner) === 1) {
+              return 1;
+            } else if (o1.owner.localeCompare(o2.owner) === -1) {
+              return -1;
+            } else {
+              return 0;
+            }
+          });
+          break;
+        }
 
-      filteredTodos = filteredTodos.filter(todo => {
-        return todo.company.toLowerCase().indexOf(filters.orderBy) !== -1;
-      });
+        case 'body': {
+          filteredTodos.sort((o1, o2) => {
+            if (o1.body.localeCompare(o2.body) === 1) {
+              return 1;
+            } else if (o1.body.localeCompare(o2.body) === -1) {
+              return -1;
+            } else {
+              return 0;
+            }
+          });
+          break;
+        }
+
+        case 'status': {
+          filteredTodos.sort((o1, o2) => {
+            if (this.compareBoolean(o1.status, o2.status) === -1) {
+              return -1;
+            } else if (this.compareBoolean(o1.status, o2.status) === 1) {
+              return 1;
+            } else {
+              return 0;
+            }
+          });
+          break;
+        }
+
+        case 'category': {
+          filteredTodos.sort((o1, o2) => {
+            if (o1.owner.localeCompare(o2.owner) === 1) {
+              return 1;
+            } else if (o1.owner.localeCompare(o2.owner) === -1) {
+              return -1;
+            } else {
+              return 0;
+            }
+          });
+          break;
+        }
+      }
     }
 
     // Filter by limit
-    if (filters.limit) {
-      filters.limit = filters.limit.toLowerCase();
-
-      filteredTodos = filteredTodos.filter(todo => {
-        return
-      })
+    if (filters.limit){
+      if (filters.limit.replace(/\s/g, '')) {
+        const limit: number = Number(filters.limit);
+        if (!Number.isNaN(limit)){
+          return todos.slice(limit);
+        }
+      }
     }
-
-    return filteredTodos;
   }
+    compareBoolean(b1: boolean, b2: boolean): number {
+      if (b1 === b2) {
+        return 0;
+      } else if (!b1 && b2) {
+          return -1;
+      } else {
+          return 1;
+      }
+    }
 }
