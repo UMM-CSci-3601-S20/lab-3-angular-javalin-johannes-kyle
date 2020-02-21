@@ -157,7 +157,7 @@ export class TodoService {
     if (filters.limit){
       if (filters.limit.replace(/\s/g, '')) {
         const limit: number = Number(filters.limit);
-        if (!Number.isNaN(limit)){
+        if (!Number.isNaN(limit)) {
           return todos.slice(limit);
         }
       }

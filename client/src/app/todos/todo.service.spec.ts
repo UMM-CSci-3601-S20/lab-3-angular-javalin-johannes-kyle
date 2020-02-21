@@ -132,7 +132,7 @@ describe('Todo service: ', () => {
     // Check that the filter parameters are correct
     expect(req.request.params.get('owner')).toEqual('thomas');
     expect(req.request.params.get('company')).toEqual('video games');
-    expect(req.request.params.get('status')).toBeTrue;
+    expect(req.request.params.get('status')).toBe(true);
 
     req.flush(testTodos);
   });
