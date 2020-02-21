@@ -88,7 +88,7 @@ describe('Todo service: ', () => {
     // Check that the request made to that URL was a GET request.
     expect(req.request.method).toEqual('GET');
 
-    // Check that the role parameter was 'admin'
+    // Check that the category parameter was 'video games'
     expect(req.request.params.get('category')).toEqual('video games');
 
     req.flush(testTodos);
@@ -108,7 +108,7 @@ describe('Todo service: ', () => {
     // Check that the request made to that URL was a GET request.
     expect(req.request.method).toEqual('GET');
 
-    // Check that the role parameter was 'You are tasked'
+    // Check that the contains parameter was 'You are tasked'
     expect(req.request.params.get('contains')).toEqual('You are tasked');
 
     req.flush(testTodos);
