@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Todo } from './todo';
+import { filter } from 'minimatch';
 
 @Injectable()
 export class TodoService {
@@ -162,6 +163,7 @@ export class TodoService {
         }
       }
     }
+    return filteredTodos;
   }
     compareBoolean(b1: boolean, b2: boolean): number {
       if (b1 === b2) {
