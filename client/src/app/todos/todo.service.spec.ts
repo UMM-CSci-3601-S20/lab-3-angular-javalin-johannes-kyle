@@ -30,7 +30,7 @@ describe('Todo service: ', () => {
     }
   ];
 
-  // List of JSON todo objects, one expected match per sorting test via filterTodos() 
+  // List of JSON todo objects, one expected match per sorting test via filterTodos()
   // sortByOwner match
   const sortByOwner: Todo[] = [
     {
@@ -132,7 +132,7 @@ describe('Todo service: ', () => {
   ];
 
    // filterByLimit match
-   const filterByLimit: Todo[] = [
+  const filterByLimit: Todo[] = [
     {
         _id: 'thomas_id',
         owner: 'thomas',
@@ -166,7 +166,6 @@ describe('Todo service: ', () => {
     // Construct an instance of the service with the mock
     // HTTP client.
     todoService = new TodoService(httpClient);
-    
   });
 
   afterEach(() => {
@@ -175,7 +174,6 @@ describe('Todo service: ', () => {
   });
 
   it('getTodos() calls api/todos', () => {
-    
     // Assert that the todos we get from this call to getTodos()
     // should be our set of test todos. Because we're subscribing
     // to the result of getTodos(), this won't actually get
@@ -299,6 +297,7 @@ describe('Todo service: ', () => {
 
   it('filterTodos() sorts by owner', () => {
     // A small collection of test todos
+    // tslint:disable-next-line: no-shadowed-variable
     const testTodos: Todo[] = [
         {
             _id: 'thomas_id',
@@ -329,6 +328,7 @@ describe('Todo service: ', () => {
 
   it('filterTodos() sorts by body', () => {
       // A small collection of test todos
+      // tslint:disable-next-line: no-shadowed-variable
       const testTodos: Todo[] = [
         {
             _id: 'thomas_id',
@@ -352,13 +352,14 @@ describe('Todo service: ', () => {
             category: 'adulting'
         }
     ];
-    expect(testTodos.length).toBe(3);
-    const todoOrderBy = 'body';
-    expect(todoService.filterTodos(testTodos, { orderBy: todoOrderBy })).toEqual(sortByBody);
+      expect(testTodos.length).toBe(3);
+      const todoOrderBy = 'body';
+      expect(todoService.filterTodos(testTodos, { orderBy: todoOrderBy })).toEqual(sortByBody);
   });
 
   it('filterTodos() sorts by status', () => {
       // A small collection of test todos
+      // tslint:disable-next-line: no-shadowed-variable
       const testTodos: Todo[] = [
         {
             _id: 'thomas_id',
@@ -382,13 +383,14 @@ describe('Todo service: ', () => {
             category: 'adulting'
         }
     ];
-    expect(testTodos.length).toBe(3);
-    const todoOrderBy = 'status';
-    expect(todoService.filterTodos(testTodos, { orderBy: todoOrderBy })).toEqual(sortByStatus);
+      expect(testTodos.length).toBe(3);
+      const todoOrderBy = 'status';
+      expect(todoService.filterTodos(testTodos, { orderBy: todoOrderBy })).toEqual(sortByStatus);
   });
 
   it('filterTodos() sorts by category', () => {
       // A small collection of test todos
+      // tslint:disable-next-line: no-shadowed-variable
       const testTodos: Todo[] = [
         {
             _id: 'thomas_id',
@@ -412,13 +414,14 @@ describe('Todo service: ', () => {
             category: 'adulting'
         }
     ];
-    expect(testTodos.length).toBe(3);
-    const todoOrderBy = 'category';
-    expect(todoService.filterTodos(testTodos, { orderBy: todoOrderBy })).toEqual(sortByCategory);
+      expect(testTodos.length).toBe(3);
+      const todoOrderBy = 'category';
+      expect(todoService.filterTodos(testTodos, { orderBy: todoOrderBy })).toEqual(sortByCategory);
   });
 
   it('filterTodos() filters by limit', () => {
     // A small collection of test todos
+    // tslint:disable-next-line: no-shadowed-variable
     const testTodos: Todo[] = [
       {
           _id: 'thomas_id',
