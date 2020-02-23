@@ -19,6 +19,11 @@
         Users
       </mat-list-item>
 
+      <mat-list-item routerLink="/todos" routerLinkActive="drawer-list-item-active"
+      (click)="drawer.close()">
+        <mat-icon matListIcon>todos</mat-icon>
+        Todos
+      </mat-list-item>
     </mat-nav-list>
   </mat-sidenav>
 
