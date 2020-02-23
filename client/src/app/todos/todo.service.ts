@@ -96,7 +96,7 @@ export class TodoService {
       });
     }
 
-    // Filter by orderBy
+    // Sort by orderBy
     if (filters.orderBy) {
       filters.orderBy = filters.orderBy.toLowerCase();
       switch(filters.orderBy) {
@@ -141,9 +141,9 @@ export class TodoService {
 
         case 'category': {
           filteredTodos.sort((o1, o2) => {
-            if (o1.owner.localeCompare(o2.owner) === 1) {
+            if (o1.category.localeCompare(o2.category) === 1) {
               return 1;
-            } else if (o1.owner.localeCompare(o2.owner) === -1) {
+            } else if (o1.category.localeCompare(o2.category) === -1) {
               return -1;
             } else {
               return 0;
