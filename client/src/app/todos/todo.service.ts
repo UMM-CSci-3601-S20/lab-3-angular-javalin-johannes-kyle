@@ -159,7 +159,7 @@ export class TodoService {
       if (filters.limit.replace(/\s/g, '')) {
         const limit: number = Number(filters.limit);
         if (!Number.isNaN(limit)) {
-          return todos.slice(0, limit);
+          return filteredTodos.slice(0, limit);
         }
       }
     }

@@ -23,6 +23,34 @@
             [(ngModel)]="todoStatus" (input)="updateFilter()">
             <mat-hint>Filtered in Angular</mat-hint>
           </mat-form-field>
+
+          <mat-form-field class="input-field">
+            <mat-label>Body</mat-label>
+            <input matInput id="todo-body-input" placeholder="Filter by body"
+            [(ngModel)]="todoBody" (input)="updateFilter()">
+            <mat-hint>Filtered in Angular</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field class="input-field">
+            <mat-label>Category</mat-label>
+            <input matInput id="todo-category-input" placeholder="Filter by category"
+            [(ngModel)]="todoCategory" (input)="updateFilter()">
+            <mat-hint>Filtered in Angular</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field class="input-field">
+            <mat-label>OrderBy</mat-label>
+            <input matInput id="todo-orderBy-input" placeholder="Sort by orderBy"
+            [(ngModel)]="todoOrderBy" (input)="updateFilter()">
+            <mat-hint>Filtered in Angular</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field class="input-field">
+            <mat-label>Limit</mat-label>
+            <input matInput id="todo-owner-input" placeholder="Limit todos"
+            [(ngModel)]="todoLimit" (input)="updateFilter()">
+            <mat-hint>Filtered in Angular</mat-hint>
+          </mat-form-field>
         </div>
 
         <div fxLayout="row wrap" fxLayoutGap="10px">
@@ -42,15 +70,7 @@
             <mat-hint>Filtered on Server</mat-hint>
           </mat-form-field>
         </div>
-
         <br>
-        <div fxLayout="row wrap" fxLayoutGap="10px">
-          <label>View type: </label>
-          <mat-radio-group aria-label="View type" [(ngModel)]="viewType" id="view-type-radio">
-            <mat-radio-button value="card">Card</mat-radio-button>
-            <mat-radio-button value="list">List</mat-radio-button>
-          </mat-radio-group>
-        </div>
 
       </mat-card-content>
     </mat-card>
@@ -60,20 +80,23 @@
 <div fxLayout="row">
   <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10" *ngIf="serverFilteredTodos; else todosError" >
     <!-- Switch between card and list view based on the viewType variable, set above in the mar-radio-group -->
-    <div [ngSwitch]="viewType">
+
 
       <!-- List view -->
-      <mat-card *ngSwitchCase="'list'">
+
         <mat-card-content>
           <mat-nav-list class="todo-nav-list">
             <h3 mat-subheader>Todos</h3>
             <a mat-list-item *ngFor="let todo of this.filteredTodos" [routerLink]="['/todos', todo._id]" class="todo-list-item">
               <h3 matLine class="todo-list-owner"> {{todo.owner}} </h3>
+              <p matLine class ="todo-list-status" *ngIf="todo.status === true">complete</p>
+              <p matLine class ="todo-list-status" *ngIf="todo.status === false">incomplete</p>
+              <p matLine class="todo-list-body"> {{todo.body}} </p>
               <p matLine class="todo-list-category"> {{todo.category}} </p>
             </a>
           </mat-nav-list>
         </mat-card-content>
-      </mat-card>
+
 
     </div>
   </div>
@@ -90,5 +113,3 @@
       </mat-error>
     </div>
   </ng-template>
-
-</div>
