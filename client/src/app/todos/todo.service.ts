@@ -151,7 +151,7 @@ export class TodoService {
     }
 
     // Filter by limit
-    if (filters.limit){
+    if (filters.limit) {
       if (filters.limit.replace(/\s/g, '')) {
         const limit: number = Number(filters.limit);
         if (!Number.isNaN(limit)) {
