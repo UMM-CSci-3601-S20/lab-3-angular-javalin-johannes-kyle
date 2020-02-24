@@ -12,16 +12,12 @@ export class TodoService {
   constructor(private httpClient: HttpClient) {
   }
 
-  getTodos(filters?: { status?: boolean, contains?: string, owner?: string, category?: string,
+  getTodos(filters?: { status?: string, contains?: string, owner?: string, category?: string,
     orderBy?: string, limit?: string }): Observable<Todo[]> {
     let httpParams: HttpParams = new HttpParams();
     if (filters) {
       if (filters.status) {
-        if (filters.status === true) {
-          httpParams = httpParams.set('status', 'complete');
-        } else {
-          httpParams = httpParams.set('status', 'incomplete');
-        }
+        httpParams = httpParams.set('status', filters.status);
       }
       if (filters.contains) {
         httpParams = httpParams.set('contains', filters.contains);
@@ -96,7 +92,7 @@ export class TodoService {
       });
     }
 
-    // Filter by orderBy
+    // Sort by orderBy
     if (filters.orderBy) {
       filters.orderBy = filters.orderBy.toLowerCase();
       switch(filters.orderBy) {
@@ -141,9 +137,9 @@ export class TodoService {
 
         case 'category': {
           filteredTodos.sort((o1, o2) => {
-            if (o1.owner.localeCompare(o2.owner) === 1) {
+            if (o1.category.localeCompare(o2.category) === 1) {
               return 1;
-            } else if (o1.owner.localeCompare(o2.owner) === -1) {
+            } else if (o1.category.localeCompare(o2.category) === -1) {
               return -1;
             } else {
               return 0;
@@ -155,11 +151,11 @@ export class TodoService {
     }
 
     // Filter by limit
-    if (filters.limit){
+    if (filters.limit) {
       if (filters.limit.replace(/\s/g, '')) {
         const limit: number = Number(filters.limit);
         if (!Number.isNaN(limit)) {
-          return todos.slice(limit);
+          return filteredTodos.slice(0, limit);
         }
       }
     }

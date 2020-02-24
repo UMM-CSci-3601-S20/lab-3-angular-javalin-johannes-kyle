@@ -29,6 +29,126 @@ describe('Todo service: ', () => {
         category: 'adulting'
     }
   ];
+
+  // List of JSON todo objects, one expected match per sorting test via filterTodos()
+  // sortByOwner match
+  const sortByOwner: Todo[] = [
+    {
+        _id: 'mark_id',
+        owner: 'mark',
+        status: false,
+        body: 'Tonight is game night. You have to bring one of the following: (1) super smash bros; (2) mario party; (3) goldeneye.',
+        category: 'video games'
+    },
+    {
+        _id: 'thomas_id',
+        owner: 'thomas',
+        status: true,
+        body: 'You are tasked with doing a speedrun of the 1997 video game "GoldenEye" for the Nintendo 64 console.',
+        category: 'video games'
+    },
+    {
+        _id: 'thomas_id',
+        owner: 'thomas',
+        status: true,
+        body: 'You are tasked with completing your taxes for 2019. You can use TurboTax, HR Block, or a CPA.',
+        category: 'adulting'
+    },
+  ];
+
+  // sortByBody match
+  const sortByBody: Todo[] = [
+    {
+        _id: 'mark_id',
+        owner: 'mark',
+        status: false,
+        body: 'Tonight is game night. You have to bring one of the following: (1) super smash bros; (2) mario party; (3) goldeneye.',
+        category: 'video games'
+    },
+    {
+        _id: 'thomas_id',
+        owner: 'thomas',
+        status: true,
+        body: 'You are tasked with completing your taxes for 2019. You can use TurboTax, HR Block, or a CPA.',
+        category: 'adulting'
+    },
+    {
+        _id: 'thomas_id',
+        owner: 'thomas',
+        status: true,
+        body: 'You are tasked with doing a speedrun of the 1997 video game "GoldenEye" for the Nintendo 64 console.',
+        category: 'video games'
+    }
+  ];
+
+  // sortByStatus match
+  const sortByStatus: Todo[] = [
+    {
+        _id: 'mark_id',
+        owner: 'mark',
+        status: false,
+        body: 'Tonight is game night. You have to bring one of the following: (1) super smash bros; (2) mario party; (3) goldeneye.',
+        category: 'video games'
+    },
+    {
+        _id: 'thomas_id',
+        owner: 'thomas',
+        status: true,
+        body: 'You are tasked with doing a speedrun of the 1997 video game "GoldenEye" for the Nintendo 64 console.',
+        category: 'video games'
+    },
+    {
+        _id: 'thomas_id',
+        owner: 'thomas',
+        status: true,
+        body: 'You are tasked with completing your taxes for 2019. You can use TurboTax, HR Block, or a CPA.',
+        category: 'adulting'
+    }
+  ];
+
+  // sortByCategory match
+  const sortByCategory: Todo[] = [
+    {
+        _id: 'thomas_id',
+        owner: 'thomas',
+        status: true,
+        body: 'You are tasked with completing your taxes for 2019. You can use TurboTax, HR Block, or a CPA.',
+        category: 'adulting'
+    },
+    {
+        _id: 'thomas_id',
+        owner: 'thomas',
+        status: true,
+        body: 'You are tasked with doing a speedrun of the 1997 video game "GoldenEye" for the Nintendo 64 console.',
+        category: 'video games'
+    },
+    {
+        _id: 'mark_id',
+        owner: 'mark',
+        status: false,
+        body: 'Tonight is game night. You have to bring one of the following: (1) super smash bros; (2) mario party; (3) goldeneye.',
+        category: 'video games'
+    },
+  ];
+
+   // filterByLimit match
+  const filterByLimit: Todo[] = [
+    {
+        _id: 'thomas_id',
+        owner: 'thomas',
+        status: true,
+        body: 'You are tasked with doing a speedrun of the 1997 video game "GoldenEye" for the Nintendo 64 console.',
+        category: 'video games'
+    },
+    {
+        _id: 'mark_id',
+        owner: 'mark',
+        status: false,
+        body: 'Tonight is game night. You have to bring one of the following: (1) super smash bros; (2) mario party; (3) goldeneye.',
+        category: 'video games'
+    }
+  ];
+
   let todoService: TodoService;
   // These are used to mock the HTTP requests so that we (a) don't have to
   // have the server running and (b) we can check exactly which HTTP
@@ -116,7 +236,7 @@ describe('Todo service: ', () => {
 
   it('getTodos() calls api/todos with multiple filter parameters', () => {
 
-    todoService.getTodos({ owner: 'thomas', category: 'video games', status: true }).subscribe(
+    todoService.getTodos({ owner: 'thomas', category: 'video games', status: 'complete' }).subscribe(
       todos => expect(todos).toBe(testTodos)
     );
 
@@ -153,7 +273,7 @@ describe('Todo service: ', () => {
   it('filterTodos() filters by owner', () => {
     expect(testTodos.length).toBe(3);
     const todoOwner = 'mark';
-    expect(todoService.filterTodos(testTodos, { owner: todoOwner }).length).toBe(1);
+    expect(todoService.filterTodos(testTodos, { owner: todoOwner })[0].owner).toBe('mark');
   });
 
   it('filterTodos() filters by status', () => {
@@ -167,5 +287,166 @@ describe('Todo service: ', () => {
     const todoOwner = 'mark';
     const todoStatus = 'incomplete';
     expect(todoService.filterTodos(testTodos, { owner: todoOwner, status: todoStatus }).length).toBe(1);
+  });
+
+  it('filterTodos() filters by body via contains', () => {
+      expect(testTodos.length).toBe(3);
+      const todoBody = 'You are tasked';
+      expect(todoService.filterTodos(testTodos, { contains: todoBody }).length).toBe(2);
+  });
+
+  it('filterTodos() sorts by owner', () => {
+    // A small collection of test todos
+    // tslint:disable-next-line: no-shadowed-variable
+    const testTodos: Todo[] = [
+        {
+            _id: 'thomas_id',
+            owner: 'thomas',
+            status: true,
+            body: 'You are tasked with doing a speedrun of the 1997 video game "GoldenEye" for the Nintendo 64 console.',
+            category: 'video games'
+        },
+        {
+            _id: 'mark_id',
+            owner: 'mark',
+            status: false,
+            body: 'Tonight is game night. You have to bring one of the following: (1) super smash bros; (2) mario party; (3) goldeneye.',
+            category: 'video games'
+        },
+        {
+            _id: 'thomas_id',
+            owner: 'thomas',
+            status: true,
+            body: 'You are tasked with completing your taxes for 2019. You can use TurboTax, HR Block, or a CPA.',
+            category: 'adulting'
+        }
+    ];
+    expect(testTodos.length).toBe(3);
+    const todoOrderBy = 'owner';
+    expect(todoService.filterTodos(testTodos, { orderBy: todoOrderBy })).toEqual(sortByOwner);
+  });
+
+  it('filterTodos() sorts by body', () => {
+      // A small collection of test todos
+      // tslint:disable-next-line: no-shadowed-variable
+      const testTodos: Todo[] = [
+        {
+            _id: 'thomas_id',
+            owner: 'thomas',
+            status: true,
+            body: 'You are tasked with doing a speedrun of the 1997 video game "GoldenEye" for the Nintendo 64 console.',
+            category: 'video games'
+        },
+        {
+            _id: 'mark_id',
+            owner: 'mark',
+            status: false,
+            body: 'Tonight is game night. You have to bring one of the following: (1) super smash bros; (2) mario party; (3) goldeneye.',
+            category: 'video games'
+        },
+        {
+            _id: 'thomas_id',
+            owner: 'thomas',
+            status: true,
+            body: 'You are tasked with completing your taxes for 2019. You can use TurboTax, HR Block, or a CPA.',
+            category: 'adulting'
+        }
+    ];
+      expect(testTodos.length).toBe(3);
+      const todoOrderBy = 'body';
+      expect(todoService.filterTodos(testTodos, { orderBy: todoOrderBy })).toEqual(sortByBody);
+  });
+
+  it('filterTodos() sorts by status', () => {
+      // A small collection of test todos
+      // tslint:disable-next-line: no-shadowed-variable
+      const testTodos: Todo[] = [
+        {
+            _id: 'thomas_id',
+            owner: 'thomas',
+            status: true,
+            body: 'You are tasked with doing a speedrun of the 1997 video game "GoldenEye" for the Nintendo 64 console.',
+            category: 'video games'
+        },
+        {
+            _id: 'mark_id',
+            owner: 'mark',
+            status: false,
+            body: 'Tonight is game night. You have to bring one of the following: (1) super smash bros; (2) mario party; (3) goldeneye.',
+            category: 'video games'
+        },
+        {
+            _id: 'thomas_id',
+            owner: 'thomas',
+            status: true,
+            body: 'You are tasked with completing your taxes for 2019. You can use TurboTax, HR Block, or a CPA.',
+            category: 'adulting'
+        }
+    ];
+      expect(testTodos.length).toBe(3);
+      const todoOrderBy = 'status';
+      expect(todoService.filterTodos(testTodos, { orderBy: todoOrderBy })).toEqual(sortByStatus);
+  });
+
+  it('filterTodos() sorts by category', () => {
+      // A small collection of test todos
+      // tslint:disable-next-line: no-shadowed-variable
+      const testTodos: Todo[] = [
+        {
+            _id: 'thomas_id',
+            owner: 'thomas',
+            status: true,
+            body: 'You are tasked with doing a speedrun of the 1997 video game "GoldenEye" for the Nintendo 64 console.',
+            category: 'video games'
+        },
+        {
+            _id: 'mark_id',
+            owner: 'mark',
+            status: false,
+            body: 'Tonight is game night. You have to bring one of the following: (1) super smash bros; (2) mario party; (3) goldeneye.',
+            category: 'video games'
+        },
+        {
+            _id: 'thomas_id',
+            owner: 'thomas',
+            status: true,
+            body: 'You are tasked with completing your taxes for 2019. You can use TurboTax, HR Block, or a CPA.',
+            category: 'adulting'
+        }
+    ];
+      expect(testTodos.length).toBe(3);
+      const todoOrderBy = 'category';
+      expect(todoService.filterTodos(testTodos, { orderBy: todoOrderBy })).toEqual(sortByCategory);
+  });
+
+  it('filterTodos() filters by limit', () => {
+    // A small collection of test todos
+    // tslint:disable-next-line: no-shadowed-variable
+    const testTodos: Todo[] = [
+      {
+          _id: 'thomas_id',
+          owner: 'thomas',
+          status: true,
+          body: 'You are tasked with doing a speedrun of the 1997 video game "GoldenEye" for the Nintendo 64 console.',
+          category: 'video games'
+      },
+      {
+          _id: 'mark_id',
+          owner: 'mark',
+          status: false,
+          body: 'Tonight is game night. You have to bring one of the following: (1) super smash bros; (2) mario party; (3) goldeneye.',
+          category: 'video games'
+      },
+      {
+          _id: 'thomas_id',
+          owner: 'thomas',
+          status: true,
+          body: 'You are tasked with completing your taxes for 2019. You can use TurboTax, HR Block, or a CPA.',
+          category: 'adulting'
+      }
+    ];
+    expect(testTodos.length).toBe(3);
+    const todoLimit = '2';
+    expect(todoService.filterTodos(testTodos, { limit: todoLimit })).toEqual(filterByLimit);
   });
 });
