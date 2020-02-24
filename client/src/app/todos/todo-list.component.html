@@ -83,9 +83,9 @@
           <mat-nav-list class="todo-nav-list">
             <h3 mat-subheader>Todos</h3>
             <a mat-list-item *ngFor="let todo of this.filteredTodos" [routerLink]="['/todos', todo._id]" class="todo-list-item">
-              <h3 matLine class ="todo-list-owner"> <b>Owner:</b>  {{todo.owner}} </h3>
-              <p matLine class ="todo-list-status" *ngIf="todo.status === true"><b>Status:</b> complete</p>
-              <p matLine class ="todo-list-status" *ngIf="todo.status === false"><b>Status:</b> incomplete</p>
+              <h3 matLine class="todo-list-owner"> <b>Owner:</b>  {{todo.owner}} </h3>
+              <p matLine class="todo-list-status" id="todo-complete" *ngIf="todo.status === true"><b>Status:</b> complete</p>
+              <p matLine class="todo-list-status" id="todo-incomplete" *ngIf="todo.status === false"><b>Status:</b> incomplete</p>
               <p matLine class="todo-list-body"> <b>Body:</b>  {{todo.body}} </p>
               <p matLine class="todo-list-category"> <b>Category:</b>  {{todo.category}} </p>
             </a>

@@ -1,10 +1,15 @@
-.todo-cards-container {
+.todo-list-status {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   width: 100%;
   position: relative;
+  color: green;
 }
 
-.todo-card {
-  margin-bottom: 10px;
+#todo-incomplete {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  width: 100%;
+  position: relative;
+  color: red;
 }
 
 .search-card {
@@ -13,4 +18,16 @@
 
 .mat-radio-button {
   margin: 0 12px;
+}
+
+#todo-complete:hover {
+  background-color: rgb(173, 235, 181);
+}
+
+#todo-incomplete:hover {
+  background-color: rgb(236, 167, 162);
+}
+
+.todo-nav-list {
+  justify-self: right;
 }
