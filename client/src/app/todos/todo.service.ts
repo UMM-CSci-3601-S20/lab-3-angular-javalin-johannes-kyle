@@ -12,16 +12,12 @@ export class TodoService {
   constructor(private httpClient: HttpClient) {
   }
 
-  getTodos(filters?: { status?: boolean, contains?: string, owner?: string, category?: string,
+  getTodos(filters?: { status?: string, contains?: string, owner?: string, category?: string,
     orderBy?: string, limit?: string }): Observable<Todo[]> {
     let httpParams: HttpParams = new HttpParams();
     if (filters) {
       if (filters.status) {
-        if (filters.status === true) {
-          httpParams = httpParams.set('status', 'complete');
-        } else {
-          httpParams = httpParams.set('status', 'incomplete');
-        }
+        httpParams = httpParams.set('status', filters.status);
       }
       if (filters.contains) {
         httpParams = httpParams.set('contains', filters.contains);

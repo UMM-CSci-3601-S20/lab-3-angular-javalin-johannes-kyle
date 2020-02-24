@@ -17,12 +17,22 @@
             <mat-hint>Filtered in Angular</mat-hint>
           </mat-form-field>
 
+
+
           <mat-form-field class="input-field">
             <mat-label>Status</mat-label>
             <input matInput id="todo-status-input" placeholder="Filter by status"
             [(ngModel)]="todoStatus" (input)="updateFilter()">
             <mat-hint>Filtered in Angular</mat-hint>
           </mat-form-field>
+<!--
+          <mat-form-field class="dropdown>
+
+            <select id="Status Filter">
+              <option value="complete">Complete</option>
+              <option value="incomplete">Incomplete</option>
+            </select>
+          </mat-form-field> -->
 
           <mat-form-field class="input-field">
             <mat-label>Body</mat-label>
