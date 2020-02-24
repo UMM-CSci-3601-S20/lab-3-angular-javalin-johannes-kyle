@@ -24,7 +24,7 @@
 
           <mat-form-field class="input-field">
             <mat-label>Limit</mat-label>
-            <input matInput id="todo-owner-input" type="string" placeholder="Limit todos"
+            <input matInput id="todo-limit-input" type="string" placeholder="Limit todos"
             min="0" max="200" [(ngModel)]="todoLimit" (input)="updateFilter()">
             <mat-hint>Filtered in Angular</mat-hint>
           </mat-form-field>
@@ -42,7 +42,7 @@
 
           <mat-form-field class="input-field">
             <mat-label>Status</mat-label>
-            <mat-select (selectionChange)="getTodosFromServer()" [(ngModel)]="todoStatus" id="user-role-select">
+            <mat-select (selectionChange)="getTodosFromServer()" [(ngModel)]="todoStatus" id="todo-status-select">
               <mat-option>--</mat-option>
               <mat-option value="complete">Complete</mat-option>
               <mat-option value="incomplete">Incomplete</mat-option>
