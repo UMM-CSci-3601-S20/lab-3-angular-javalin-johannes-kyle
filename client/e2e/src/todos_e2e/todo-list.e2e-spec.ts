@@ -23,11 +23,20 @@ describe('Todo list', () => {
   });
 
   it('Should type something in the category filter and check that it returned correct elements', () => {
-    page.typeInput('todo-category-input', 'Blanche');
+    page.typeInput('todo-category-input', 'software design');
 
     // All of the todo cards should have the owner we are filtering by
     page.getTodoListItems().each(e => {
-      expect(e.element(by.className('todo-category-owner')).getText()).toEqual('Owner: Blanche');
+      expect(e.element(by.className('todo-list-category')).getText()).toEqual('Category: software design');
+    });
+  });
+
+  it('Should type something in the category filter and check that it returned correct elements', () => {
+    page.typeInput('todo-category-input', 'SOftwarE design');
+
+    // All of the todo cards should have the category we are filtering by
+    page.getTodoListItems().each(e => {
+      expect(e.element(by.className('todo-list-category')).getText()).toEqual('Category: software design');
     });
   });
 

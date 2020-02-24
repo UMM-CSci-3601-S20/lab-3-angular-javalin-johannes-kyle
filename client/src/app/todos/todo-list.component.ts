@@ -40,8 +40,6 @@ export class TodoListComponent implements OnInit {
       contains: this.todoBody,
       owner: this.todoOwner,
       category: this.todoCategory,
-      orderBy: this.todoOrderBy,
-      limit: this.todoLimit
     }).subscribe(returnedTodos => {
       this.serverFilteredTodos = returnedTodos;
       this.updateFilter();
